@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.25" height="17" viewBox="0 0 17.25 17">
+  <g id="ic-chat-numbers" transform="translate(-640 -705)">
+    <line id="Line_217" data-name="Line 217" x2="10" transform="translate(646.5 708.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <line id="Line_218" data-name="Line 218" x2="10" transform="translate(646.5 713.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <line id="Line_219" data-name="Line 219" x2="10" transform="translate(646.5 718.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <text id="_1" data-name="1" transform="translate(642 712)" fill="#000926" font-size="7" font-family="Poppins-ExtraBold, Poppins" font-weight="800"><tspan x="-1.319" y="0">1</tspan></text>
+    <text id="_2" data-name="2" transform="translate(642 720)" fill="#000926" font-size="7" font-family="Poppins-ExtraBold, Poppins" font-weight="800"><tspan x="-1.981" y="0">2</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="11.376" height="9.982" viewBox="0 0 11.376 9.982">
+  <g id="ic-arrow-step-right" transform="translate(10.626 8.921) rotate(180)">
+    <g id="ic-arrow-left" transform="translate(0 0)">
+      <g id="Group_3079" data-name="Group 3079" transform="translate(9.876 7.86) rotate(180)">
+        <path id="Path_15" data-name="Path 15" d="M0,7.86,3.93,3.93,0,0" transform="translate(5.946)" fill="none" stroke="#000926" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <line id="Line_15" data-name="Line 15" x1="9.876" transform="translate(0 3.93)" fill="none" stroke="#000926" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

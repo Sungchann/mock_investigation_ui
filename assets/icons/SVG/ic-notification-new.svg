@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.783" height="26.983" viewBox="0 0 24.783 26.983">
+  <g id="ic-notification-new" transform="translate(0.849 2)">
+    <path id="Path_129" data-name="Path 129" d="M2515.673,1875.328v-7.48a8.064,8.064,0,0,0-8.063-8.064h0a8.064,8.064,0,0,0-8.064,8.064v7.48" transform="translate(-2497.605 -1856.819)" fill="none" stroke="#000926" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <line id="Line_17" data-name="Line 17" x2="19.793" transform="translate(0 18.971)" fill="none" stroke="#000926" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+    <g id="Ellipse_38" data-name="Ellipse 38" transform="translate(12.706 0)" fill="#40b900" stroke="#fff" stroke-miterlimit="10" stroke-width="2">
+      <circle cx="4.614" cy="4.614" r="4.614" stroke="none"/>
+      <circle cx="4.614" cy="4.614" r="5.614" fill="none"/>
+    </g>
+    <path id="Path_130" data-name="Path 130" d="M2505,1880.138a2.989,2.989,0,0,0,5.617,0" transform="translate(-2497.914 -1857.972)" fill="none" stroke="#000926" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"/>
+  </g>
+</svg>

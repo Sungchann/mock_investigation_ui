@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="19.524" height="19.524" viewBox="0 0 19.524 19.524">
+  <g id="ic-dashboard" transform="translate(0)">
+    <g id="Rectangle_158" data-name="Rectangle 158" transform="translate(0 0)" fill="none" stroke="#000926" stroke-width="1.5">
+      <rect width="8.786" height="10.738" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="7.286" height="9.238" rx="1.25" fill="none"/>
+    </g>
+    <g id="Rectangle_161" data-name="Rectangle 161" transform="translate(19.524 19.524) rotate(180)" fill="none" stroke="#000926" stroke-width="1.5">
+      <rect width="8.786" height="10.738" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="7.286" height="9.238" rx="1.25" fill="none"/>
+    </g>
+    <g id="Rectangle_159" data-name="Rectangle 159" transform="translate(0 12.691)" fill="none" stroke="#000926" stroke-width="1.5">
+      <rect width="8.786" height="6.833" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="7.286" height="5.333" rx="1.25" fill="none"/>
+    </g>
+    <g id="Rectangle_160" data-name="Rectangle 160" transform="translate(19.524 6.833) rotate(180)" fill="none" stroke="#000926" stroke-width="1.5">
+      <rect width="8.786" height="6.833" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="7.286" height="5.333" rx="1.25" fill="none"/>
+    </g>
+  </g>
+</svg>

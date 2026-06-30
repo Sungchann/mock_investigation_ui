@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.25" height="13" viewBox="0 0 16.25 13">
+  <g id="ic-chat-bullets" transform="translate(-612 -707)">
+    <line id="Line_217" data-name="Line 217" x2="10" transform="translate(617.5 708.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <line id="Line_218" data-name="Line 218" x2="10" transform="translate(617.5 713.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <line id="Line_219" data-name="Line 219" x2="10" transform="translate(617.5 718.5)" fill="none" stroke="#000926" stroke-linecap="round" stroke-width="1.5"/>
+    <circle id="Ellipse_160" data-name="Ellipse 160" cx="1.5" cy="1.5" r="1.5" transform="translate(612 707)" fill="#000926"/>
+    <circle id="Ellipse_161" data-name="Ellipse 161" cx="1.5" cy="1.5" r="1.5" transform="translate(612 712)" fill="#000926"/>
+    <circle id="Ellipse_162" data-name="Ellipse 162" cx="1.5" cy="1.5" r="1.5" transform="translate(612 717)" fill="#000926"/>
+  </g>
+</svg>
