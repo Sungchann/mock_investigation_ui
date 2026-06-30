@@ -17,3 +17,7 @@ Mock Invesitation Case App.
 - Tribe Expansion Tile (text overfow not working) 
 - Sidebar full height obtain
 - 
+
+## OBSERVATIONS
+- Main Content Widget changes when a source is clicked.
+- 
