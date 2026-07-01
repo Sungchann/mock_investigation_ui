@@ -45,6 +45,7 @@ class SourceExpansionTile extends StatelessWidget{
     final (backgroundColor, textColor) = getPillBackgroundColorAndTextColor(consentState);
     logger.i("Source expansion tile dart!");
     return ExpansionTile(
+      shape: Border(),
       showTrailingIcon: false,
       leading: Container(
         width: 30,

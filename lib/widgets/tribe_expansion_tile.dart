@@ -18,6 +18,7 @@ class TribeExpansionTile extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return ExpansionTile(
+      shape: Border(),
       showTrailingIcon: false,
       leading: Container(
         width: 10,
