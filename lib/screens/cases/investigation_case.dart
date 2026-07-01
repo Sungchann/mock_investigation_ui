@@ -5,6 +5,7 @@ import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart'
 
 // widgets 
 import 'package:mock_investigation_case/widgets/tribe_expansion_tile.dart';
+import 'package:mock_investigation_case/widgets/enterprise_table.dart';
 
 class InvestigationCaseScreen extends StatelessWidget { 
   const InvestigationCaseScreen({super.key});
@@ -13,32 +14,49 @@ class InvestigationCaseScreen extends StatelessWidget {
   Widget build(BuildContext context){
     return Scaffold(
       body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Column(
-            children: [
-              SizedBox(
-                width: 300,
-                child: TribeExpansionTile(tribeCategory: "Enterprise", tribeCount: 4)
+          Container(
+            width: 300,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: BrandingColor.grey1, width: 1),
+            ),
+            child: Column(
+              children: [
+                TribeExpansionTile(tribeCategory: "Enterprise", tribeCount: 4),
+                TribeExpansionTile(tribeCategory: "Personal", tribeCount: 2),
+                TribeExpansionTile(tribeCategory: "Drive", tribeCount: 0),
+                TribeExpansionTile(tribeCategory: "Finance", tribeCount: 1),
+                TribeExpansionTile(tribeCategory: "Dump/Upload", tribeCount: 6),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: BrandingColor.blue50,
               ),
-              SizedBox(
-                width: 300,
-                child: TribeExpansionTile(tribeCategory: "Enterprise", tribeCount: 4)
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Investigation Case",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20
+                    ),
+                  ),
+                  Expanded(
+                    child: EnterpriseTable(),
+                  )
+                ],
               )
-            ],            
-          ),
-          SizedBox(width: 25), 
-
-          Text(
-            "Investigation Case",
-            style: TextStyle(
-              color: BrandingColor.blue900,
-              fontWeight: FontWeight.w900,
-              fontSize: 24.0
             )
-          ),
-        ]
-      )
+          )
+        ],
+      ),
     );
   }
 }
