@@ -8,8 +8,12 @@ Mock Invesitation Case App.
 - Adhere DDL Branding (Colors, etc) 
 
 ## TASKS
+- Stats Bar 
 - SideBar Integration (from LEADS-Frontend)
 - SideBar Expansion (from Investigation Cases)
+- Create StatusPill Widget (collecting, discovering, checking)
+- Fetch data from backend 
+- Filter Part (Prerequisite: Collection Mock Data)
 - 
 
 ## Concerns
