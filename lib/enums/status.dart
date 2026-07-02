@@ -1,5 +1,10 @@
 enum Status {
+  pending,
+  granted,
   collecting,
   discovering,
-  checking
+  checking,
+  done,
+  error,
+  ready
 }
