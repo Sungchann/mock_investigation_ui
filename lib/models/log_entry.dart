@@ -1,6 +1,6 @@
 
 class LogEntry {
-  final int time; 
+  final String time; 
   final String message;
 
   const LogEntry({
@@ -8,4 +8,11 @@ class LogEntry {
     required this.message
   }); 
   
+
+  factory LogEntry.fromJson(Map<String, dynamic> json){
+    return LogEntry(
+      time: json['t'], 
+      message: json["msg"]
+    );
+  }
 }

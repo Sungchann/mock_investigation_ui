@@ -14,4 +14,13 @@ class FinanceRecord {
     required this.status
   }); 
   
+  factory FinanceRecord.fromJson(Map<String, dynamic> json){
+    return FinanceRecord(
+      id: json['id'], 
+      type: json['type'], 
+      count: json['count'], 
+      range: json['range'], 
+      status: json['status']
+    );
+  }
 }

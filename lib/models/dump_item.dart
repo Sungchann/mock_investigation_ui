@@ -18,4 +18,15 @@ class DumpItem {
     this.error
   }); 
   
+  factory DumpItem.fromJson(Map<String, dynamic> json){
+    return DumpItem(
+      id: json['id'], 
+      fileName: json['filename'], 
+      sizeBytes: json['size_bytes'], 
+      status: json['status'], 
+      progressPct: json['progress_pct'], 
+      remotePath: json['remote_path'],
+      error: json['error']
+    );
+  }
 }

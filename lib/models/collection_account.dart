@@ -15,4 +15,14 @@ class CollectionAccount {
     required this.added,
     this.error
   });
+
+  factory CollectionAccount.fromJson(Map<String, dynamic> json){
+    return CollectionAccount(
+      id: json['id'], 
+      email: json['email'], 
+      status: json['status'], 
+      items: json['items'], 
+      added: json['added']
+    );
+  }
 }
