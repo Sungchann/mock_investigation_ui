@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 // styling
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
+import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_workspace.dart';
 
 // widgets 
 import 'package:mock_investigation_case/widgets/tribe_expansion_tile.dart';
-import 'package:mock_investigation_case/widgets/enterprise_table.dart';
 
 class InvestigationCaseScreen extends StatelessWidget { 
   const InvestigationCaseScreen({super.key});
@@ -32,6 +32,7 @@ class InvestigationCaseScreen extends StatelessWidget {
               ],
             ),
           ),
+          // goes to the tribeCategory workspace
           Expanded(
             child: Container(
               padding: EdgeInsets.all(20),
@@ -39,18 +40,8 @@ class InvestigationCaseScreen extends StatelessWidget {
                 color: BrandingColor.blue50,
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Investigation Case",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20
-                    ),
-                  ),
-                  Expanded(
-                    child: EnterpriseTable(),
-                  )
+                  EnterpriseWorkspace()
                 ],
               )
             )
