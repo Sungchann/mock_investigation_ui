@@ -14,7 +14,7 @@ Mock Invesitation Case App.
 - Create StatusPill Widget (collecting, discovering, checking)
 - Fetch data from backend 
 - Filter Part (Prerequisite: Collection Mock Data)
-- 
+- Make width of the table dynamic (calculate the largest word length)
 
 ## Concerns
 - Scrollable Pipeline
@@ -25,3 +25,6 @@ Mock Invesitation Case App.
 ## OBSERVATIONS
 - Main Content Widget changes when a source is clicked.
 - 
+
+## RUNNING
+- flutter run -d chrome --web-port 5173
