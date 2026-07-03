@@ -143,10 +143,12 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                   onSelected: (String value){
                     setState(() {
                       _selectedDomainFilter = value;
+                      print(_selectedDomainFilter);
                     });
                   },
                   itemBuilder: (context) => [
                     ...domainFilters.map((domain) => PopupMenuItem<String>(
+                        value: domain.titleCase,
                         child: Text(
                           domain.titleCase, 
                           style: TextStyle(fontSize: 12)
