@@ -143,7 +143,6 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                   onSelected: (String value){
                     setState(() {
                       _selectedDomainFilter = value;
-                      print(_selectedDomainFilter);
                     });
                   },
                   itemBuilder: (context) => [
