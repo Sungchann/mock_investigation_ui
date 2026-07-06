@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mock_investigation_case/models/log_entry.dart';
+import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_filter_bar.dart';
+import 'package:mock_investigation_case/widgets/logs.dart';
 import 'package:recase/recase.dart'; 
 
 // core
@@ -34,7 +37,8 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
 
   List<CollectionSource> allEnterpriseCollectionSource = [];
   List<CollectionUser> allEnterpriseCollectionUser = [];
-
+  List<LogEntry> logs = [];
+  
   List<CollectionUser> filteredCollectionUsers = []; 
 
   //filters
@@ -75,9 +79,11 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
         final List<String> allDomainList = allEnterpriseCollectionUser.map((source) => 
           source.domain).toList();
         
+        logs = allEnterpriseCollectionSource.expand((source) => 
+          source.logs).cast<LogEntry>().toList();   
+
         domainFilters = obtainUniqueValuesFromList(allDomainList);
-        domainFilters.insert(0, "all");
-        print(domainFilters); 
+        domainFilters.insert(0, "all"); 
         isFetching = false;
       });
     } catch (e) {
@@ -119,56 +125,65 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                 fontSize: 20
               ),
             ),
-            Row(
-              children: [
-                ...statusFilters.map((statusFilter) => (
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white, 
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)
-                      ),
-                    ),
-                    onPressed: (){
-                      setState(() {
-                        _selectedStatusFilter = statusFilter;
-                      });
-                    },
-                    child: Text(statusFilter.titleCase)
-                  )
-                )),
-                PopupMenuButton<String>(
-                  color: Colors.white, 
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)), 
-                  onSelected: (String value){
-                    setState(() {
-                      _selectedDomainFilter = value;
-                    });
-                  },
-                  itemBuilder: (context) => [
-                    ...domainFilters.map((domain) => PopupMenuItem<String>(
-                        value: domain.titleCase,
-                        child: Text(
-                          domain.titleCase, 
-                          style: TextStyle(fontSize: 12)
-                        )
-                    ))
-                  ],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                        Text(_selectedDomainFilter,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                        SizedBox(width: 4),
-                        Icon(Icons.arrow_drop_down, color: BrandingColor.blue700)
-                    ],
-                  )
-                )
-              ],
+            EnterpriseFilterBar(
+              currentSelectedStatus: _selectedStatusFilter, 
+              onChangedSelectedStatus: (filter){
+                setState(() {
+                  _selectedStatusFilter = filter;
+                });
+              }
             ),
+            // Row(
+            //   children: [
+            //     ...statusFilters.map((statusFilter) => (
+            //       ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //           backgroundColor: Colors.white, 
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(20)
+            //           ),
+            //         ),
+            //         onPressed: (){
+            //           setState(() {
+            //             _selectedStatusFilter = statusFilter;
+            //           });
+            //         },
+            //         child: Text(statusFilter.titleCase)
+            //       )
+            //     )),
+            //     PopupMenuButton<String>(
+            //       color: Colors.white, 
+            //       shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)), 
+            //       onSelected: (String value){
+            //         setState(() {
+            //           _selectedDomainFilter = value;
+            //         });
+            //       },
+            //       itemBuilder: (context) => [
+            //         ...domainFilters.map((domain) => PopupMenuItem<String>(
+            //             value: domain.titleCase,
+            //             child: Text(
+            //               domain.titleCase, 
+            //               style: TextStyle(fontSize: 12)
+            //             )
+            //         ))
+            //       ],
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //             Text(_selectedDomainFilter,
+            //               overflow: TextOverflow.ellipsis,
+            //               maxLines: 1,
+            //             ),
+            //             SizedBox(width: 4),
+            //             Icon(Icons.arrow_drop_down, color: BrandingColor.blue700)
+            //         ],
+            //       )
+            //     )
+            //   ],
+            // ),
             Expanded(
+              flex: 3,
               child: Builder(
                 builder: (context){
                   if (isFetching){
@@ -181,6 +196,10 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                   return EnterpriseTable(collectionUsers: users);
                 },
               ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Logs(logs: logs),
             )
           ],
         )
