@@ -43,10 +43,11 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
 
   //filters
   final List<String> statusFilters = ["all", "collecting", "done", "error"];
-  String _selectedStatusFilter = "all";
   List<String> domainFilters = [];
-  String _selectedDomainFilter = 'All'; 
 
+  String _selectedStatusFilter = "all";
+  String _selectedDomainFilter = 'all'; 
+  String _searchQuery = "";
 
   @override
   void initState(){
@@ -83,7 +84,7 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
           source.logs).cast<LogEntry>().toList();   
 
         domainFilters = obtainUniqueValuesFromList(allDomainList);
-        domainFilters.insert(0, "all"); 
+        domainFilters.insert(0, "all");  
         isFetching = false;
       });
     } catch (e) {
@@ -95,6 +96,16 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
     }
   }
   
+  List<CollectionUser> get applyFilters {
+    var users = allEnterpriseCollectionUser;
+
+    users = _applyStatusFilter(users);
+    users = _applyDomainFilter(users);
+    users = _applySearchFilter(users);
+
+    return users;
+  }
+
   List<CollectionUser> _applyStatusFilter(List<CollectionUser> users){
     if (_selectedStatusFilter== "all") return users; 
     return users.where((u) => 
@@ -105,6 +116,17 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
     if (_selectedDomainFilter == 'all') return users; 
     return users.where((user) => 
       user.domain.toLowerCase() == _selectedDomainFilter.toLowerCase()).toList();
+  }
+
+  List<CollectionUser> _applySearchFilter(List<CollectionUser> users) {
+    if (_searchQuery.trim().isEmpty) return users;
+
+    final query = _searchQuery.toLowerCase();
+
+    return users.where((user) {
+      return user.name.toLowerCase().contains(query) ||
+            user.domain.toLowerCase().contains(query);
+    }).toList();
   }
 
   @override
@@ -127,61 +149,26 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
             ),
             EnterpriseFilterBar(
               currentSelectedStatus: _selectedStatusFilter, 
-              onChangedSelectedStatus: (filter){
+              onChangedSelectedStatus: (status){
                 setState(() {
-                  _selectedStatusFilter = filter;
+                  _selectedStatusFilter = status;
                 });
-              }
+              },
+              domainFilters: domainFilters,
+              currentSelectedDomain: _selectedDomainFilter,
+              onChangedSelectedDomain: (domain){
+                setState(() {
+                  _selectedDomainFilter = domain; 
+                });
+              },
+
+              currentSearchQuery: _searchQuery,
+              onSearchChanged: (searchQuery){
+                setState(() {
+                  _searchQuery = searchQuery;
+                });
+              },
             ),
-            // Row(
-            //   children: [
-            //     ...statusFilters.map((statusFilter) => (
-            //       ElevatedButton(
-            //         style: ElevatedButton.styleFrom(
-            //           backgroundColor: Colors.white, 
-            //           shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(20)
-            //           ),
-            //         ),
-            //         onPressed: (){
-            //           setState(() {
-            //             _selectedStatusFilter = statusFilter;
-            //           });
-            //         },
-            //         child: Text(statusFilter.titleCase)
-            //       )
-            //     )),
-            //     PopupMenuButton<String>(
-            //       color: Colors.white, 
-            //       shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(8)), 
-            //       onSelected: (String value){
-            //         setState(() {
-            //           _selectedDomainFilter = value;
-            //         });
-            //       },
-            //       itemBuilder: (context) => [
-            //         ...domainFilters.map((domain) => PopupMenuItem<String>(
-            //             value: domain.titleCase,
-            //             child: Text(
-            //               domain.titleCase, 
-            //               style: TextStyle(fontSize: 12)
-            //             )
-            //         ))
-            //       ],
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //             Text(_selectedDomainFilter,
-            //               overflow: TextOverflow.ellipsis,
-            //               maxLines: 1,
-            //             ),
-            //             SizedBox(width: 4),
-            //             Icon(Icons.arrow_drop_down, color: BrandingColor.blue700)
-            //         ],
-            //       )
-            //     )
-            //   ],
-            // ),
             Expanded(
               flex: 3,
               child: Builder(
@@ -192,7 +179,7 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                   if (fetchingError != null){
                     return Center(child: Text('Error: $fetchingError'));
                   }
-                  final users = _applyStatusFilter(allEnterpriseCollectionUser);
+                  final users = applyFilters;
                   return EnterpriseTable(collectionUsers: users);
                 },
               ),
