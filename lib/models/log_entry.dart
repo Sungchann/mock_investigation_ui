@@ -12,7 +12,7 @@ class LogEntry {
   factory LogEntry.fromJson(Map<String, dynamic> json){
     return LogEntry(
       time: json['t'], 
-      message: json["msg"]
+      message: json['msg']
     );
   }
 }
