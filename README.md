@@ -97,22 +97,25 @@ The app will be available at `http://localhost:1337`.
 
 ## Tasks
 
-- [ ] **Stats Bar** — Display summary statistics (e.g., total cases, active leads, resolved cases).
+### HIGH-PRIORITY 
+- [ ] Tribe Selection based Rendering - Implement tribe selection based rendering where user selects a provider_key then render.
+- [ ] Provider Tile - Implement provider tile (pipeline and stats)
+- [ ] Provider Tile Status - Modify the provider tile status. Use chip. 
+- [ ] Provider Tile Selected - Implement when the privider tile is selected the bg color is changed. 
+- [ ] Add Source - Implement Add Source Functionality 
+- [ ] 
+
+### LOW-PRIORITY
 - [ ] **Sidebar Integration** — Port sidebar navigation component from `LEADS-Frontend`.
 - [ ] **Sidebar Expansion** — Implement expand/collapse behavior as seen in `Investigation Cases`.
-- [ ] **StatusPill Widget** — Create a reusable pill/badge widget for case statuses: `Collecting`, `Discovering`, `Checking`.
-- [ ] **Fetch Data from Backend** — Wire up API calls to the FastAPI backend for case data.
-- [ ] **Filter Part** — Add filtering functionality (prerequisite: mock data collection must be completed first).
 - [ ] **Dynamic Table Width** — Calculate column width dynamically based on the largest word/content length per column.
-- [ ] **Search by Name/Email** — Add a search bar to filter cases by name or email.
-
+- [ ] 
 ---
 
 ## Concerns / Known Issues
 
 - **Scrollable Pipeline** — The pipeline view needs to support scrolling (horizontal/vertical, TBD) when content overflows.
 - **Tribe Expansion Tile** — Text overflow (ellipsis/wrapping) is not working correctly on the expandable tile.
-- **Sidebar Full Height** — Sidebar is not stretching to full viewport height; needs a layout fix (likely a `Expanded`/`SizedBox.expand` or constraint issue).
 - _(Open item — add additional concerns here as they're discovered.)_
 
 ---
