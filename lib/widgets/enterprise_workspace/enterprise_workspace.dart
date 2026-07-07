@@ -133,20 +133,13 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
   Widget build(BuildContext context){
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
         decoration: BoxDecoration(
           color: BrandingColor.blue50,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Investigation Case",
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 20
-              ),
-            ),
             EnterpriseFilterBar(
               currentSelectedStatus: _selectedStatusFilter, 
               onChangedSelectedStatus: (status){
@@ -161,7 +154,6 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                   _selectedDomainFilter = domain; 
                 });
               },
-
               currentSearchQuery: _searchQuery,
               onSearchChanged: (searchQuery){
                 setState(() {
@@ -177,7 +169,16 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
                     return Center(child: CircularProgressIndicator());
                   }
                   if (fetchingError != null){
-                    return Center(child: Text('Error: $fetchingError'));
+                    return Center(
+                      child: Text(
+                        'Error: $fetchingError',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16
+                        ),
+                        )
+                    );
                   }
                   final users = applyFilters;
                   return EnterpriseTable(collectionUsers: users);

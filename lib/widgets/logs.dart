@@ -28,38 +28,35 @@ class Logs extends StatelessWidget {
                 blurRadius: 10.0),
           ],
         ),
-        child: Scrollbar(
-          thumbVisibility: true,
-          trackVisibility: true,
-          child: ListView(
-            children: logs.map((log) {
-              return Row(
-                children: [
-                  SizedBox(
-                    width: 80,
-                    child: Text(
-                      log.time,
-                      style: TextStyle(
-                        color: BrandingColor.grey3,
-                        fontSize: 12,
-                        letterSpacing: 2,
-                      ),
+        child: ListView(
+          children: logs.map((log) {
+            return Row(
+              children: [
+                SizedBox(
+                  // width: 60,
+                  child: Text(
+                    log.time,
+                    style: TextStyle(
+                      color: BrandingColor.grey3,
+                      fontSize: 12,
+                      letterSpacing: 2,
+                      fontFamily: 'Montserrat'
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      log.message,
-                      style: TextStyle(
-                        color: BrandingColor.grey2,
-                        fontSize: 12 
-                      ),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Text(
+                    log.message,
+                    style: TextStyle(
+                      color: BrandingColor.grey2,
+                      fontSize: 12 
                     ),
                   ),
-                ],
-              );
-            }).toList(),
-          ),
+                ),
+              ],
+            );
+          }).toList(),
         ),
       ),
     );

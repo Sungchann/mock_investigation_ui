@@ -4,6 +4,8 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/models/collection_user.dart';
+import 'package:mock_investigation_case/utils/fmt_bytes_coventer.dart';
+import 'package:mock_investigation_case/utils/fmt_count_conveter.dart';
 
 class EnterpriseTable extends StatelessWidget{ 
   final List<CollectionUser>? collectionUsers; 
@@ -37,6 +39,7 @@ class EnterpriseTable extends StatelessWidget{
       case "domain":
         return (ColumnSize.L, null, TextAlign.start);
       case "status":
+        return (null, 120, TextAlign.end);
       case 'emails':
       case "mailSize":
       case "driveSize":
@@ -111,30 +114,61 @@ class EnterpriseTable extends StatelessWidget{
                 ),
                 DataCell(
                   Text(user.email, 
-                  style: TextStyle(fontSize: 11))),
+                  style: TextStyle(
+                    fontSize: 11,
+                    // fontFamily: 'Montserrat'
+                    )
+                    )
+                  ),
                 DataCell(
                   Text(user.domain, 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.status.name.toString(), 
+                  Chip(
+                    label: Text(
+                      user.status.name.toString(),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: user.status.name.toLowerCase() == 'done'
+                        ? Colors.green.shade500
+                          : user.status.name.toLowerCase() == 'collecting' 
+                            ? Colors.blue.shade500
+                              : user.status.name.toLowerCase() == 'error'
+                                ? Colors.red.shade500
+                                  : Colors.grey.shade500,
+                      ),
+                    ),
+                    side: BorderSide.none,
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 0),
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
+                    backgroundColor: 
+                      user.status.name.toLowerCase() == 'done'
+                        ? Colors.green.withValues(alpha: 0.15)
+                          : user.status.name.toLowerCase() == 'collecting' 
+                            ? Colors.blue.withValues(alpha: 0.15)
+                              : user.status.name.toLowerCase() == 'error'
+                                ? Colors.red.withValues(alpha: 0.15)
+                                  : Colors.grey.withValues(alpha: 0.15),
+                    )
+                  ),
+                DataCell(
+                  Text(fmtCount(user.discMail).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.discMail.toString(), 
+                  Text(fmtBytes(user.discMailSize).toString(),
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.discMailSize.toString(),
+                  Text(fmtBytes(user.discDriveSize).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.discDriveSize.toString(), 
+                  Text(fmtBytes(user.discSpSize).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.discSpSize.toString(), 
+                  Text(fmtCount(user.discTeamsCh).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text(user.discTeamsCh.toString(), 
-                  style: TextStyle(fontSize: 11))),
-                DataCell(
-                  Text(user.discTeamsCl.toString(), 
+                  Text(fmtCount(user.discTeamsCl).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
                   Text("scope yes scope", 
