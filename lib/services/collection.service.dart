@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
+import 'package:mock_investigation_case/models/source_summary.dart';
 import 'package:mock_investigation_case/utils/parse_json_list.dart'; 
 
 class CollectionService {
@@ -15,7 +16,7 @@ class CollectionService {
     );
     
     if (response.body.isNotEmpty){
-      logger.i('collection_service: fetching is done}');
+      logger.i('collection_service: fetching collection sources is done');
       
       final Map<String, dynamic> json = jsonDecode(response.body); 
       final List<dynamic> data = json['data']; 
@@ -24,6 +25,26 @@ class CollectionService {
       return sources; 
     }
     
-    throw Exception('Failed fetched data');
+    throw Exception('Collection_Service: fetching collection sources failed');
+  }
+
+  Future <SourceSummary> getCollectionSummary() async {
+    final response = await http.get(
+      Uri.parse('$API_BASE/cases/$CASE_ID/summary')
+    );
+
+    if (response.body.isNotEmpty){
+      logger.i('collection_service: fetching collection summary is done');
+
+      final Map<String, dynamic> json = jsonDecode(response.body); 
+      
+      final Map<String, dynamic> data = json['data'];
+      final Map<String, dynamic> summary = data['stats']; 
+      final collectionSummary = SourceSummary.fromJson(summary); 
+
+      return collectionSummary;
+    }
+
+    throw Exception('Collection_Service: fetching collection summary failed'); 
   }
 }

@@ -107,40 +107,4 @@ class CollectionSource {
       logs: parseJsonList(json["log"], LogEntry.fromJson),
     );
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'tribe_id': tribeType.name,
-      'provider_key': providerKey,
-      'name': name,
-      'logo': logo,
-      'subject': subject,
-      'domain': domain,
-      'consent_state': consentState.toString(),
-
-      'scope_mail': scopeMail,
-      'scope_drive': scopeDrive,
-      'scope_sp': scopeSp,
-
-      'items': items,
-      'added': added,
-      'tenant_id': tenantId,
-      'date_from': dateFrom,
-      'date_to': dateTo,
-
-      'imap_host': imapHost,
-      'imap_port': imapPort,
-
-      'dump_path': dumpPath,
-      'dump_simulated': dumpSimulated,
-      'dump_items_count': dumpItems?.length ?? 0,
-      'discovery_live': discoveryLive,
-      'users_count': users?.length ?? 0,
-      'accounts_count': accounts?.length ?? 0,
-      'finance_records_count': financeRecords?.length ?? 0,
-      'logs_count': logs.length,
-    };
-  }
 }
