@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
+import 'package:mock_investigation_case/enums/tribe_type.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
 import 'package:mock_investigation_case/models/source_summary.dart';
 import 'package:mock_investigation_case/services/collection.service.dart';
+import 'package:mock_investigation_case/widgets/drive_workspace/drive_workspace.dart';
+import 'package:mock_investigation_case/widgets/dump_or_upload_workspace/dump_upload_workspace.dart';
 import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_workspace.dart';
+import 'package:mock_investigation_case/widgets/finance_workspace/finance_workspace.dart';
+import 'package:mock_investigation_case/widgets/personal_workspace/personal_workspace.dart';
 import 'package:mock_investigation_case/widgets/tribe_expansion_tile.dart';
 import 'package:mock_investigation_case/widgets/statistics_tab.dart';
 
@@ -29,7 +34,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
   bool isFetching = true;
   String? fetchingErrorMessage;
 
-  int _currentSelectedSourceId = 0;
+  int _currentSelectedSourceId= 0;
 
   @override
   void initState(){
@@ -55,6 +60,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
       if (!mounted) return;
       setState(() {
         sourceSummary = summary; 
+        collectionSource = allCollectionSource;
 
         enterpriseCollectionSource = allCollectionSource.where((source) => 
           source.tribeType.name.toLowerCase().toString() == 'enterprise').toList();
@@ -160,7 +166,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
                       ),
                       SizedBox(height: 5),
                       StatisticsTab(sourceSummary: sourceSummary),
-                      EnterpriseWorkspace()
+                      _buildWorkspace()
                     ],
                   );
                 }
@@ -228,7 +234,38 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
       ],
     );
   }
-  // Widget _renderWorkspace(){
+  Widget _buildWorkspace(){
+    if (isFetching){
+      return Center(child: CircularProgressIndicator());
+    }
+    String tribeType = collectionSource.firstWhere((source) => 
+    source.id == _currentSelectedSourceId).tribeType.name;
+  
+    CollectionSource selectedSelectionSource = collectionSource.firstWhere((source) => 
+      source.id == _currentSelectedSourceId);
 
-  // }
+    switch(tribeType){
+      case "enterprise": 
+        return EnterpriseWorkspace(enterpriseCollectionSource: selectedSelectionSource);
+      case "personal":
+        return PersonalWorkspace(personalCollectionSource: selectedSelectionSource);
+      case "drive":
+        return DriveWorkspace(driveCollectionSource: selectedSelectionSource);
+      case "finance":
+        return FinanceWorkspace(financeCollectionSource: selectedSelectionSource);
+      case "dump":
+        return DumpUploadWorkspace(dumpUploadCollectionSource: selectedSelectionSource);
+      default:
+        return Center(
+          child: Text(
+            'No users available',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.w800,
+              fontSize: 16
+            ),
+            )
+        );
+    }      
+  }
 }
