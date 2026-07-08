@@ -128,7 +128,7 @@ class EnterpriseTable extends StatelessWidget{
                     label: Text(
                       user.status.name.toString(),
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 9,
                         color: user.status.name.toLowerCase() == 'done'
                         ? Colors.green.shade500
                           : user.status.name.toLowerCase() == 'collecting' 
@@ -139,7 +139,10 @@ class EnterpriseTable extends StatelessWidget{
                       ),
                     ),
                     side: BorderSide.none,
-                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.all(0.2),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                     backgroundColor: 

@@ -1,61 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:recase/recase.dart'; 
+import 'package:mock_investigation_case/models/collection_source.dart';
+import 'package:recase/recase.dart';
 
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
-
-import 'package:mock_investigation_case/enums/tribe_type.dart';
 import 'package:mock_investigation_case/enums/consent_state.dart';
-import 'package:mock_investigation_case/widgets/pipeline.dart'; 
+import 'package:mock_investigation_case/widgets/pipeline.dart';
 
-// if state is pending or dump then comfirm granted
-// if state is ready then start collection
-// if state is collecting then can pause
-// if state is done then can do export and worflow
-(Color, Color) getPillBackgroundColorAndTextColor(ConsentState consentState){
-  if(ConsentState.collecting == consentState){
+(Color, Color) getPillBackgroundColorAndTextColor(ConsentState consentState) {
+  if (ConsentState.collecting == consentState) {
     return (Color(0xFFEFF6FF), Color(0xFF1D4ED8));
-  }
-  else if(ConsentState.done == consentState){
+  } else if (ConsentState.done == consentState) {
     return (Color(0xFFF0FDF4), Color(0xFF15803D));
   }
-  return (Color(0xFFFFF7ED), Color(0xFF92400E)); 
+  return (Color(0xFFFFF7ED), Color(0xFF92400E));
 }
 
-class SourceExpansionTile extends StatelessWidget{ 
-  final String? sourceLogoName;
-  final String sourceName; 
-  final String sourceSubject;
-  final TribeType tribeType;
-  final ConsentState consentState; 
-  final List<List<String>> pipelineSteps;
+class SourceExpansionTile extends StatefulWidget {
+  final CollectionSource collectionSource;
+  final int currentSelectedSourceId;
+  final ValueChanged<int> onChangedSelectedSourceId;
 
   const SourceExpansionTile({
-    this.sourceLogoName,
-    required this.sourceName,
-    required this.sourceSubject,
-    required this.tribeType,
-    required this.consentState,
-    required this.pipelineSteps, 
-    super.key
-  }); 
+    super.key,
+    required this.collectionSource,
+    required this.currentSelectedSourceId,
+    required this.onChangedSelectedSourceId,
+  });
 
   @override
-  Widget build(BuildContext context){
-    final (backgroundColor, textColor) = getPillBackgroundColorAndTextColor(consentState);
-    logger.i("Source expansion tile dart!");
+  State<SourceExpansionTile> createState() => _SourceExpansionTileState();
+}
+
+class _SourceExpansionTileState extends State<SourceExpansionTile> {
+  final ExpansibleController _controller = ExpansibleController();
+
+  bool get _isSelected =>
+      widget.currentSelectedSourceId == widget.collectionSource.id;
+
+  @override
+  void didUpdateWidget(covariant SourceExpansionTile oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final wasSelected =
+        oldWidget.currentSelectedSourceId == oldWidget.collectionSource.id;
+    if (_isSelected && !wasSelected) {
+      _controller.expand();
+    } else if (!_isSelected && wasSelected) {
+      _controller.collapse();
+    }
+  }
+
+  String mapLogoPath(String path) {
+    return path.replaceAll(
+      '/logos',
+      'assets/icons/collection_logo',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final (backgroundColor, textColor) =
+        getPillBackgroundColorAndTextColor(widget.collectionSource.consentState);
+    final isSelected = _isSelected;
+
     return ExpansionTile(
-      shape: Border(),
+      controller: _controller,
+      initiallyExpanded: isSelected,
+      shape: const Border(),
       showTrailingIcon: false,
+      backgroundColor: isSelected ? BrandingColor.blue50 : null,
+      onExpansionChanged: (expanded) {
+        if (expanded) {
+          widget.onChangedSelectedSourceId(widget.collectionSource.id);
+        }
+      },
       leading: Container(
         width: 30,
         height: 15,
         decoration: BoxDecoration(
-          image: sourceLogoName != null ? DecorationImage(
-            image: AssetImage(sourceLogoName!), 
-            fit: BoxFit.contain,
-          )
-          : null,
+          image: widget.collectionSource.logo != null
+              ? DecorationImage(
+                  image: AssetImage(mapLogoPath(widget.collectionSource.logo!)),
+                  fit: BoxFit.contain,
+                )
+              : null,
         ),
       ),
       title: Row(
@@ -65,45 +92,57 @@ class SourceExpansionTile extends StatelessWidget{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                sourceName.toString().titleCase,
-                style: TextStyle(
+                widget.collectionSource.name.toString().titleCase,
+                style: const TextStyle(
                   fontSize: 11,
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
-                )
+                ),
               ),
-               Text(
-                sourceSubject.toString(),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 9,
-                  color: BrandingColor.grey2
-                )
+              Row(
+                children: [
+                  Text(
+                    widget.collectionSource.id.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 9, color: BrandingColor.grey2),
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    widget.collectionSource.subject.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(fontSize: 9, color: BrandingColor.grey2),
+                  ),
+                ],
               ),
             ],
           ),
           Container(
             decoration: BoxDecoration(
               color: backgroundColor,
-              borderRadius: BorderRadius.circular(20)
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
               child: Text(
-                consentState.name.toString().titleCase,
+                widget.collectionSource.consentState.name.toString().titleCase,
                 style: TextStyle(
-                  fontSize: 11, 
-                  fontWeight: FontWeight.w500, 
-                  color: textColor
-                )
-              )
-            )
-          )
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  color: textColor,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       children: [
-        Pipeline(pipelineSteps: ["Agwa", "Core", "Icon", "Agwa", "Core", "Icon", "Agwa", "Core", "Icon", "Agwa", "Core", "Icon", "Agwa", "Core", "Icon", "Agwa", "Core", "Icon"])
+        Pipeline(pipelineSteps: [
+          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon",
+          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon",
+          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon"
+        ])
       ],
-    ); 
+    );
   }
 }
