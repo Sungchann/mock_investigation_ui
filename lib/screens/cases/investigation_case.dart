@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
 import 'package:mock_investigation_case/models/source_summary.dart';
@@ -19,8 +20,16 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
   late List<CollectionSource> collectionSource;
   late SourceSummary sourceSummary; 
 
+  List<CollectionSource> enterpriseCollectionSource = []; 
+  List<CollectionSource> personalCollectionSource = [];  
+  List<CollectionSource> driveCollectionSource = []; 
+  List<CollectionSource> financeCollectionSource = []; 
+  List<CollectionSource> dumpOrUploadCollectionSource = [];
+
   bool isFetching = true;
   String? fetchingErrorMessage;
+
+  int _currentSelectedSourceId = 0;
 
   @override
   void initState(){
@@ -41,11 +50,37 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
       ]);
 
       final summary = results[0] as SourceSummary;
-      final sources = results[1] as List<CollectionSource>;
+      final allCollectionSource = results[1] as List<CollectionSource>;
 
       if (!mounted) return;
       setState(() {
         sourceSummary = summary; 
+
+        enterpriseCollectionSource = allCollectionSource.where((source) => 
+          source.tribeType.name.toLowerCase().toString() == 'enterprise').toList();
+
+        personalCollectionSource = allCollectionSource.where((source) => 
+          source.tribeType.name.toLowerCase().toString() == 'personal').toList(); 
+
+        driveCollectionSource = allCollectionSource.where((source) => 
+          source.tribeType.name.toLowerCase().toString() == 'drive').toList(); 
+
+        financeCollectionSource = allCollectionSource.where((source) => 
+          source.tribeType.name.toLowerCase().toString() == 'finance').toList(); 
+
+        dumpOrUploadCollectionSource = allCollectionSource.where((source) => 
+          source.tribeType.name.toLowerCase().toString() == 'dump').toList(); 
+        
+        enterpriseCollectionSource.isNotEmpty 
+          ? _currentSelectedSourceId = enterpriseCollectionSource.first.id
+            : personalCollectionSource.isNotEmpty 
+              ? _currentSelectedSourceId = personalCollectionSource.first.id
+                : driveCollectionSource.isNotEmpty 
+                  ? _currentSelectedSourceId = driveCollectionSource.first.id
+                    : financeCollectionSource.isNotEmpty 
+                      ?  _currentSelectedSourceId = financeCollectionSource.first.id
+                        :  _currentSelectedSourceId = dumpOrUploadCollectionSource.first.id;
+        
         isFetching = false;
       });
     } catch(e){
@@ -69,14 +104,25 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
               color: Colors.white,
               border: Border.all(color: BrandingColor.grey1, width: 1),
             ),
-            child: Column(
-              children: [
-                TribeExpansionTile(tribeCategory: "Enterprise", tribeCount: 4),
-                TribeExpansionTile(tribeCategory: "Personal", tribeCount: 2),
-                TribeExpansionTile(tribeCategory: "Drive", tribeCount: 0),
-                TribeExpansionTile(tribeCategory: "Finance", tribeCount: 1),
-                TribeExpansionTile(tribeCategory: "Dump/Upload", tribeCount: 6),
-              ],
+            child: Builder(
+              builder: (context){
+                if (isFetching){
+                  return Center(child: CircularProgressIndicator());
+                }
+                if (fetchingErrorMessage != null){
+                  return Center(
+                    child: Text(
+                      'Error Fetching Failed!',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16
+                      ),
+                      )
+                  );
+                }
+                return _sideBar(context);
+              },
             ),
           ),
           Expanded(
@@ -126,6 +172,62 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
     );
   }
 
+  Widget _sideBar(BuildContext context){
+    return Column(
+      children: [
+        TribeExpansionTile(
+          tribeName: "Enterprise", 
+          collectionSources: enterpriseCollectionSource, 
+          currentSelectedSourceId: _currentSelectedSourceId, 
+          onChangedSelectedSourceId: (selectedSourceId){
+            setState(() {
+              _currentSelectedSourceId = selectedSourceId;
+            });
+          }
+        ),
+        TribeExpansionTile(
+          tribeName: "Personal", 
+          collectionSources: personalCollectionSource, 
+          currentSelectedSourceId: _currentSelectedSourceId, 
+          onChangedSelectedSourceId: (selectedSourceId){
+            setState(() {
+              _currentSelectedSourceId = selectedSourceId;
+            });
+          }
+        ),
+        TribeExpansionTile(
+          tribeName: "Drive", 
+          collectionSources: driveCollectionSource, 
+          currentSelectedSourceId: _currentSelectedSourceId, 
+          onChangedSelectedSourceId: (selectedSourceId){
+            setState(() {
+              _currentSelectedSourceId = selectedSourceId;
+            });
+          }
+        ),
+        TribeExpansionTile(
+          tribeName: "Finance", 
+          collectionSources: financeCollectionSource, 
+          currentSelectedSourceId: _currentSelectedSourceId, 
+          onChangedSelectedSourceId: (selectedSourceId){
+            setState(() {
+              _currentSelectedSourceId = selectedSourceId;
+            });
+          }
+        ),
+        TribeExpansionTile(
+          tribeName: "Dump / Upload", 
+          collectionSources: dumpOrUploadCollectionSource, 
+          currentSelectedSourceId: _currentSelectedSourceId, 
+          onChangedSelectedSourceId: (selectedSourceId){
+            setState(() {
+              _currentSelectedSourceId = selectedSourceId;
+            });
+          }
+        ),
+      ],
+    );
+  }
   // Widget _renderWorkspace(){
 
   // }
