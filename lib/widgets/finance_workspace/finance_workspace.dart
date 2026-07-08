@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
 
 class FinanceWorkspace extends StatelessWidget{
-  final List<CollectionSource> financeCollectionSource;
+  final CollectionSource financeCollectionSource;
 
   const FinanceWorkspace({
     super.key,
