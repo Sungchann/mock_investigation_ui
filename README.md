@@ -98,18 +98,20 @@ The app will be available at `http://localhost:1337`.
 ## Tasks
 
 ### HIGH-PRIORITY 
-- [ ] Tribe Selection based Rendering - Implement tribe selection based rendering where user selects a provider_key then render.
-- [ ] Provider Tile - Implement provider tile (pipeline and stats)
-- [ ] Provider Tile Status - Modify the provider tile status. Use chip. 
-- [ ] Provider Tile Selected - Implement when the privider tile is selected the bg color is changed. 
-- [ ] Add Source - Implement Add Source Functionality 
-- [ ] 
+- [ ] **Refactoring Workspace** - Refactor workspace, change it to stateless and from main screen pass the data only a collection source not a list of collection source. Create a conditional a builder widget for if sourceSelected is in this tribe and go go for rendering.
+- [ ] **Information Box** - Implement information box for each source tribe expansion and add the action button" 
+- [ ] **Tribe Selection based Rendering** - Implement tribe selection based rendering where user selects a provider_key then render.
+- [ ] **Provider Tile** - Implement provider tile (pipeline and stats)
+- [ ] **Provider Tile Status** - Modify the provider tile status. Use chip. 
+- [ ] **Provider Tile Selected** - Implement when the privider tile is selected the bg color is changed. 
+- [ ] **Add Source** - Implement Add Source Functionality 
+- [ ] **Logo Implementation** - Implement Add Source Functionality 
 
 ### LOW-PRIORITY
 - [ ] **Sidebar Integration** — Port sidebar navigation component from `LEADS-Frontend`.
 - [ ] **Sidebar Expansion** — Implement expand/collapse behavior as seen in `Investigation Cases`.
 - [ ] **Dynamic Table Width** — Calculate column width dynamically based on the largest word/content length per column.
-- [ ] 
+
 ---
 
 ## Concerns / Known Issues
