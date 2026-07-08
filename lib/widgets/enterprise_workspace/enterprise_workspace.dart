@@ -23,23 +23,20 @@ import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_
 import 'package:mock_investigation_case/utils/obtain_unique_values.dart';
 
 class EnterpriseWorkspace extends StatefulWidget { 
-  const EnterpriseWorkspace({super.key});
+  final CollectionSource enterpriseCollectionSource;
+
+  const EnterpriseWorkspace({
+    super.key,
+    required this.enterpriseCollectionSource
+  });
 
   @override
   State <EnterpriseWorkspace> createState() => _EnterpriseWorkspaceState();
 }
 
 class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
-  final CollectionService _collectionService = CollectionService();
-  late List<CollectionSource> allCollectionSource; 
-  bool isFetching = true; 
-  String? fetchingError;
-
-  List<CollectionSource> allEnterpriseCollectionSource = [];
-  List<CollectionUser> allEnterpriseCollectionUser = [];
-  List<LogEntry> logs = [];
-  
-  List<CollectionUser> filteredCollectionUsers = []; 
+  List<CollectionUser> collectionUsers = [];
+  List<CollectionUser> filteredCollectionUsers = [];
 
   //filters
   final List<String> statusFilters = ["all", "collecting", "done", "error"];
@@ -52,57 +49,25 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
   @override
   void initState(){
     super.initState(); 
-    _fetchCollectionSources();  
+    _obtainData();  
   }
 
-  Future<void> _fetchCollectionSources() async {
-    setState(() {
-      isFetching = true;
-      fetchingError = null;
-    });
-
-    try {
-      final result = await _collectionService.getCollectionSources();
-      if (!mounted) return;
-
-      setState(() {
-        allCollectionSource = result;
-        allEnterpriseCollectionSource = allCollectionSource.where((s) => 
-          s.tribeType.name.toString() == "enterprise").toList();
-        
-        allEnterpriseCollectionUser = allEnterpriseCollectionSource.expand((source) =>
-          source.users ?? []).cast<CollectionUser>().toList();
-
-        // var encoder = JsonEncoder.withIndent(' ');
-        // String prettyString = encoder.convert(allEnterpriseCollectionSource);
-        // print(prettyString);
-        
-        final List<String> allDomainList = allEnterpriseCollectionUser.map((source) => 
-          source.domain).toList();
-        
-        logs = allEnterpriseCollectionSource.expand((source) => 
-          source.logs).cast<LogEntry>().toList();   
-
-        domainFilters = obtainUniqueValuesFromList(allDomainList);
-        domainFilters.insert(0, "all");  
-        isFetching = false;
-      });
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        fetchingError = e.toString();
-        isFetching = false;
-      });
+  void _obtainData() {
+    final users = widget.enterpriseCollectionSource.users;
+    if (users != null) {
+      collectionUsers = users.cast<CollectionUser>();
+      domainFilters = [
+        "all",
+        ...collectionUsers.map((u) => u.domain).toSet(),
+      ];
     }
   }
   
   List<CollectionUser> get applyFilters {
-    var users = allEnterpriseCollectionUser;
-
+    var users = collectionUsers;
     users = _applyStatusFilter(users);
     users = _applyDomainFilter(users);
     users = _applySearchFilter(users);
-
     return users;
   }
 
@@ -165,13 +130,10 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
               flex: 3,
               child: Builder(
                 builder: (context){
-                  if (isFetching){
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (fetchingError != null){
+                  if (collectionUsers.isEmpty){
                     return Center(
                       child: Text(
-                        'Error: $fetchingError',
+                        'No users available',
                         style: TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.w800,
@@ -187,7 +149,7 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
             ),
             Expanded(
               flex: 1,
-              child: Logs(logs: logs),
+              child: Logs(logs: widget.enterpriseCollectionSource.logs),
             )
           ],
         )
