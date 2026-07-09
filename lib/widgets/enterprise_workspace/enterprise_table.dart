@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart'; 
 
 import 'package:data_table_2/data_table_2.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/models/collection_user.dart';
 import 'package:mock_investigation_case/utils/fmt_bytes_coventer.dart';
@@ -15,8 +14,6 @@ class EnterpriseTable extends StatelessWidget{
     required this.collectionUsers
   });
   
-  // headers checkBox, name, email, domain, status, emails, mail size, drive size, sp size, channels, calls, scope
-  // freeze columns but can be overlapped by a certain length
   final enterpriseTableHeaders = {
     'name': "Name",
     'email': 'Email',
@@ -30,27 +27,56 @@ class EnterpriseTable extends StatelessWidget{
     'calls': 'Calls',
     'scope': 'Scope'
   };
-  
-  (ColumnSize?, double?, TextAlign) getColumnSizeAndTextAlign(String name) {
+
+  (ColumnSize, TextAlign) getColumnSizeAndTextAlign(String name) {
     switch (name) {
       case "name":
-        return (null, 150, TextAlign.start);
+        return (ColumnSize.M, TextAlign.start);
       case "email":
       case "domain":
-        return (ColumnSize.L, null, TextAlign.start);
+      case "scope":
+        return (ColumnSize.L, TextAlign.start);
       case "status":
-        return (null, 120, TextAlign.end);
+        return (ColumnSize.S, TextAlign.end);
       case 'emails':
       case "mailSize":
       case "driveSize":
       case "spSize":
       case "channels":
       case "calls":
-        return (null, 100, TextAlign.end);
-      case "scope":
-        return (ColumnSize.L, null, TextAlign.start);
+        return (ColumnSize.S, TextAlign.end);
       default:
-        return (ColumnSize.S, null, TextAlign.start);
+        return (ColumnSize.S, TextAlign.start);
+    }
+  }
+
+  (String, Color, Color) getActionButtonDesign(String status){
+    // label, bgcolor, textcolor
+    status = status.toLowerCase();
+    if (status == 'done') {
+      return (
+        'Export',
+        Colors.green.shade100,
+        Colors.green.shade800
+      ); 
+    } else if (status == 'error') {
+      return (
+        'Retry',
+        Colors.red.shade100,
+        Colors.red.shade800
+      ); 
+    } else if (status == 'collecting' || status == "not started") {
+      return (
+        'Collect',
+        BrandingColor.blue700,
+      Colors.white
+      ); 
+    } else {
+      return (
+        'Export',
+        Colors.grey.shade100,
+        Colors.grey.shade800
+      ); 
     }
   }
 
@@ -63,7 +89,7 @@ class EnterpriseTable extends StatelessWidget{
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
           boxShadow: const [
-            BoxShadow(
+            BoxShadow(  
                 color: Color(0x0D000000),
                 offset: Offset(0, 0),
                 blurRadius: 15.0),
@@ -73,7 +99,7 @@ class EnterpriseTable extends StatelessWidget{
         child: DataTable2(
           columnSpacing: 16,
           horizontalMargin: 12,
-          minWidth: 800,
+          minWidth: 1000,
           headingRowHeight: 55,
           dataRowHeight: 40,
           headingRowColor: WidgetStateProperty.all(
@@ -84,13 +110,12 @@ class EnterpriseTable extends StatelessWidget{
           ),
           columns: [
           ...enterpriseTableHeaders.entries.map((header){
-              final (columnSize, fixedWidth, textAlign) = getColumnSizeAndTextAlign(header.key);
+              final (columnSize, textAlign) = getColumnSizeAndTextAlign(header.key);
               return DataColumn2(
-                size: fixedWidth == null ? columnSize! : ColumnSize.S,
-                fixedWidth: fixedWidth,
+                size: columnSize,
                 label: Text(
                   header.value,
-                  textAlign: textAlign,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w800,
@@ -101,8 +126,9 @@ class EnterpriseTable extends StatelessWidget{
             })
           ],
           rows: [
-            ...(collectionUsers ?? []).map((user) => (
-              DataRow(cells: [
+            ...(collectionUsers ?? []).map((user){
+              final (label, bgColor, textColor) = getActionButtonDesign(user.status.name);
+              return DataRow(cells: [
                 DataCell(
                   Text(user.name, 
                     style: TextStyle(
@@ -130,12 +156,12 @@ class EnterpriseTable extends StatelessWidget{
                       style: TextStyle(
                         fontSize: 9,
                         color: user.status.name.toLowerCase() == 'done'
-                        ? Colors.green.shade500
+                        ? Colors.green
                           : user.status.name.toLowerCase() == 'collecting' 
-                            ? Colors.blue.shade500
+                            ? BrandingColor.blue700
                               : user.status.name.toLowerCase() == 'error'
-                                ? Colors.red.shade500
-                                  : Colors.grey.shade500,
+                                ? Colors.red
+                                  : Colors.grey,
                       ),
                     ),
                     side: BorderSide.none,
@@ -147,12 +173,12 @@ class EnterpriseTable extends StatelessWidget{
                     visualDensity: VisualDensity.compact,
                     backgroundColor: 
                       user.status.name.toLowerCase() == 'done'
-                        ? Colors.green.withValues(alpha: 0.15)
+                        ? Colors.green.withValues(alpha: 0.1)
                           : user.status.name.toLowerCase() == 'collecting' 
-                            ? Colors.blue.withValues(alpha: 0.15)
+                            ? BrandingColor.blue700.withValues(alpha: 0.1)
                               : user.status.name.toLowerCase() == 'error'
-                                ? Colors.red.withValues(alpha: 0.15)
-                                  : Colors.grey.withValues(alpha: 0.15),
+                                ? Colors.red.withValues(alpha: 0.1)
+                                  : Colors.grey.withValues(alpha: 0.1),
                     )
                   ),
                 DataCell(
@@ -174,10 +200,33 @@ class EnterpriseTable extends StatelessWidget{
                   Text(fmtCount(user.discTeamsCl).toString(), 
                   style: TextStyle(fontSize: 11))),
                 DataCell(
-                  Text("scope yes scope", 
-                  style: TextStyle(fontSize: 11)))
-              ])
-            )),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: (){
+                    
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: bgColor ,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 11,
+                            color: textColor
+                          ),
+                        )
+                      ),
+                    ),
+                  )
+                )
+              ]);
+            }),
             
           ],
         )

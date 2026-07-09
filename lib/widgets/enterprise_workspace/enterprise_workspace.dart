@@ -1,26 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mock_investigation_case/models/log_entry.dart';
 import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_filter_bar.dart';
 import 'package:mock_investigation_case/widgets/logs.dart';
-import 'package:recase/recase.dart'; 
-
-// core
-import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
-
-// models
 import 'package:mock_investigation_case/models/collection_source.dart';
 import 'package:mock_investigation_case/models/collection_user.dart';
-
-// services 
-import 'package:mock_investigation_case/services/collection.service.dart';
-
-// widgets
 import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_table.dart'; 
-
-//utils 
-import 'package:mock_investigation_case/utils/obtain_unique_values.dart';
 
 class EnterpriseWorkspace extends StatefulWidget { 
   final CollectionSource enterpriseCollectionSource;
@@ -99,9 +82,6 @@ class _EnterpriseWorkspaceState extends State<EnterpriseWorkspace>{
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-        decoration: BoxDecoration(
-          color: BrandingColor.blue50,
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
