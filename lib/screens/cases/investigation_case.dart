@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
-import 'package:mock_investigation_case/enums/tribe_type.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
 import 'package:mock_investigation_case/models/source_summary.dart';
 import 'package:mock_investigation_case/services/collection.service.dart';
@@ -264,7 +262,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
               fontWeight: FontWeight.w800,
               fontSize: 16
             ),
-            )
+          )
         );
     }      
   }
