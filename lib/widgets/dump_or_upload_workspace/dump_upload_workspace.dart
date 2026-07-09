@@ -9,9 +9,29 @@ class DumpUploadWorkspace extends StatelessWidget{
     required this.dumpUploadCollectionSource
   });
 
+  @override
   Widget build(BuildContext context){
-    return Container(
-        
+    return Builder(
+      builder: (context){
+        if (dumpUploadCollectionSource.domain.isEmpty){
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                    color: Color(0x0D000000),
+                    offset: Offset(0, 0),
+                    blurRadius: 10.0),
+              ],
+            ),
+            child: Center(
+              child: Text("Collection Source (Domain: Personal) is empty"),
+            ),
+          );
+        }
+        return Text("dsada");
+      },
     );
   }
 }
