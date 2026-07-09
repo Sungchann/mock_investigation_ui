@@ -181,6 +181,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
       children: [
         TribeExpansionTile(
           tribeName: "Enterprise", 
+          summary: sourceSummary,
           collectionSources: enterpriseCollectionSource, 
           currentSelectedSourceId: _currentSelectedSourceId, 
           onChangedSelectedSourceId: (selectedSourceId){
@@ -191,6 +192,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
         ),
         TribeExpansionTile(
           tribeName: "Personal", 
+          summary: null,
           collectionSources: personalCollectionSource, 
           currentSelectedSourceId: _currentSelectedSourceId, 
           onChangedSelectedSourceId: (selectedSourceId){
@@ -201,6 +203,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
         ),
         TribeExpansionTile(
           tribeName: "Drive", 
+          summary: null,
           collectionSources: driveCollectionSource, 
           currentSelectedSourceId: _currentSelectedSourceId, 
           onChangedSelectedSourceId: (selectedSourceId){
@@ -211,6 +214,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
         ),
         TribeExpansionTile(
           tribeName: "Finance", 
+          summary: null,
           collectionSources: financeCollectionSource, 
           currentSelectedSourceId: _currentSelectedSourceId, 
           onChangedSelectedSourceId: (selectedSourceId){
@@ -221,6 +225,7 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
         ),
         TribeExpansionTile(
           tribeName: "Dump / Upload", 
+          summary: null,
           collectionSources: dumpOrUploadCollectionSource, 
           currentSelectedSourceId: _currentSelectedSourceId, 
           onChangedSelectedSourceId: (selectedSourceId){

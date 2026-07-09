@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
+import 'package:mock_investigation_case/models/source_summary.dart';
 import 'package:recase/recase.dart';
-
+import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/enums/consent_state.dart';
 import 'package:mock_investigation_case/widgets/pipeline.dart';
+import 'package:mock_investigation_case/widgets/kpi.dart';
 
 (Color, Color) getPillBackgroundColorAndTextColor(ConsentState consentState) {
   if (ConsentState.collecting == consentState) {
@@ -19,15 +21,18 @@ class SourceExpansionTile extends StatefulWidget {
   final CollectionSource collectionSource;
   final int currentSelectedSourceId;
   final ValueChanged<int> onChangedSelectedSourceId;
+  final SourceSummary? summary;
 
   const SourceExpansionTile({
     super.key,
     required this.collectionSource,
     required this.currentSelectedSourceId,
     required this.onChangedSelectedSourceId,
+    required this.summary,
   });
 
   @override
+
   State<SourceExpansionTile> createState() => _SourceExpansionTileState();
 }
 
@@ -38,6 +43,7 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
       widget.currentSelectedSourceId == widget.collectionSource.id;
 
   @override
+
   void didUpdateWidget(covariant SourceExpansionTile oldWidget) {
     super.didUpdateWidget(oldWidget);
     final wasSelected =
@@ -57,7 +63,10 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
   }
 
   @override
+  
   Widget build(BuildContext context) {
+
+
     final (backgroundColor, textColor) =
         getPillBackgroundColorAndTextColor(widget.collectionSource.consentState);
     final isSelected = _isSelected;
@@ -118,22 +127,6 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
               ),
             ],
           ),
-          // Container(
-          //   decoration: BoxDecoration(
-          //     color: backgroundColor,
-          //     borderRadius: BorderRadius.circular(20),
-          //   ),
-          //   child: Center(
-          //     child: Text(
-          //       widget.collectionSource.consentState.name.toString().titleCase,
-          //       style: TextStyle(
-          //         fontSize: 11,
-          //         fontWeight: FontWeight.w500,
-          //         color: textColor,
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Chip(
             side: BorderSide.none, 
             shape: RoundedRectangleBorder(
@@ -155,11 +148,15 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
         ],
       ),
       children: [
-        Pipeline(pipelineSteps: [
-          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon",
-          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon",
-          "Agwa", "Core", "Icon", "Agwa", "Core", "Icon"
-        ])
+        Pipeline(
+          pipelineProgress: widget.collectionSource.consentState.toString(),
+          name: widget.collectionSource.tribeType.toString()
+          ),
+        SizedBox(height: 50,),
+        KPIValues(
+          source: widget.collectionSource,
+          summary: widget.summary,
+          ),
       ],
     );
   }

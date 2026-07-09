@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/widgets/enterprise_workspace/enterprise_filter_bar.dart';
 import 'package:mock_investigation_case/widgets/logs.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
