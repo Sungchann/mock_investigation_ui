@@ -97,15 +97,12 @@ The app will be available at `http://localhost:1337`.
 
 ## Tasks
 
-### HIGH-PRIORITY 
-- [ ] **Refactoring Workspace** - Refactor workspace, change it to stateless and from main screen pass the data only a collection source not a list of collection source. Create a conditional a builder widget for if sourceSelected is in this tribe and go go for rendering.
-- [ ] **Information Box** - Implement information box for each source tribe expansion and add the action button" 
-- [ ] **Tribe Selection based Rendering** - Implement tribe selection based rendering where user selects a provider_key then render.
-- [ ] **Provider Tile** - Implement provider tile (pipeline and stats)
-- [ ] **Provider Tile Status** - Modify the provider tile status. Use chip. 
-- [ ] **Provider Tile Selected** - Implement when the privider tile is selected the bg color is changed. 
-- [ ] **Add Source** - Implement Add Source Functionality 
-- [ ] **Logo Implementation** - Implement Add Source Functionality 
+### HIGH-PRIORITY
+- [ ] **Tribe Selection based Rendering** - Implement tribe selection based rendering where user selects a provider_key then render (Dump workspace). 
+- [ ] **Pipeline** - Modify the pipeline in the sidebar. This should match the original's mockup design.
+- [ ] **Information Box** - Implement information box / metadata box for each source tribe expansion and add the action button use fmt bytes or fmt count to convert the data. Based it from original mockup design. You can find it in the sidebar.  
+- [ ] **Add Source** - Implement Add Source Functionality. 
+- [ ] **Collection Tab** - From finance workspace. Implement the collection's tab (from to - start collection in the original mockup frontend)  
 
 ### LOW-PRIORITY
 - [ ] **Sidebar Integration** — Port sidebar navigation component from `LEADS-Frontend`.
