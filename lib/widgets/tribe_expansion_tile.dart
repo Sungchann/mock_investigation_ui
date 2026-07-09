@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/models/collection_source.dart'; 
 import 'package:mock_investigation_case/widgets/source_expansion_tile.dart';
 
@@ -65,21 +66,35 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
           ),
           Row(
             children: [
-              Container(
-                width: 20,
-                decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                borderRadius: BorderRadius.circular(100)
+              // Container(
+              //   width: 20,
+              //   decoration: BoxDecoration(
+              //   color: Colors.grey.shade200,
+              //   borderRadius: BorderRadius.circular(100)
+              //   ),
+              //   child: Center(
+              //     child: Text(
+              //       widget.collectionSources.length.toString(),
+              //       style: TextStyle(
+              //         fontSize: 12,
+              //         fontWeight: FontWeight.w700,
+              //       )
+              //     ),
+              //   ) 
+              // ),
+              Chip(
+                side: BorderSide.none,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)
                 ),
-                child: Center(
-                  child: Text(
-                    widget.collectionSources.length.toString(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    )
+                backgroundColor: BrandingColor.grey4,
+                label: Text(
+                  widget.collectionSources.length.toString(),
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700
                   ),
-                ) 
+                ),
               ),
               IconButton(
                 icon: const Icon(
