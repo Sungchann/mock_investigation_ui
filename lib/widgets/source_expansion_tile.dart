@@ -92,9 +92,9 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.collectionSource.name.toString().titleCase,
+                widget.collectionSource.name.toString(),
                 style: const TextStyle(
-                  fontSize: 11,
+                  fontSize: 10,
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
@@ -118,22 +118,40 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
               ),
             ],
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(20),
+          // Container(
+          //   decoration: BoxDecoration(
+          //     color: backgroundColor,
+          //     borderRadius: BorderRadius.circular(20),
+          //   ),
+          //   child: Center(
+          //     child: Text(
+          //       widget.collectionSource.consentState.name.toString().titleCase,
+          //       style: TextStyle(
+          //         fontSize: 11,
+          //         fontWeight: FontWeight.w500,
+          //         color: textColor,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Chip(
+            side: BorderSide.none, 
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Center(
-              child: Text(
-                widget.collectionSource.consentState.name.toString().titleCase,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  color: textColor,
-                ),
-              ),
+            padding: EdgeInsets.all(0.2),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            visualDensity: VisualDensity.compact,
+            backgroundColor: backgroundColor,
+            label: Text(
+              widget.collectionSource.consentState.name.toString().titleCase,
+              style: TextStyle(
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+                color: textColor
+              )
             ),
-          ),
+          )
         ],
       ),
       children: [
