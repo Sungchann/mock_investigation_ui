@@ -66,7 +66,6 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
   
   Widget build(BuildContext context) {
 
-
     final (backgroundColor, textColor) =
         getPillBackgroundColorAndTextColor(widget.collectionSource.consentState);
     final isSelected = _isSelected;

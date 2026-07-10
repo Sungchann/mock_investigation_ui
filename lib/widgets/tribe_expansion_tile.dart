@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
 import 'package:mock_investigation_case/models/source_summary.dart'; 
 import 'package:mock_investigation_case/widgets/source_expansion_tile.dart';
+import 'package:mock_investigation_case/widgets/add_source_dialog.dart';
+
 
 class TribeExpansionTile extends StatefulWidget{
   final String tribeName; 
@@ -42,8 +45,10 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
     }
   }
   
+ 
   @override
   Widget build(BuildContext context){
+
     return ExpansionTile(
       controller: _controller,
       initiallyExpanded: _isSelected,
@@ -90,12 +95,14 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
                 ),
                 onPressed: (){
                   showDialog(
+                    barrierColor: Color.fromRGBO(10, 22, 40, 0.5),
+                    barrierDismissible: true,
                     context: context, 
-                    builder: (_) => const AlertDialog(
-                      title: Text("Create item")
-                    ),
+                    builder: (context) {
+                      return AddSourceDialog(tribeName: widget.tribeName);
+                    },
                   );
-                },
+                }
               )
             ],
           )
@@ -113,4 +120,5 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
       ],
     );
   }
+
 }

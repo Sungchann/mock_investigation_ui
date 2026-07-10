@@ -32,6 +32,12 @@ class AppColor {
   static Color get greyLight => colorFromHex('#b0b0b0');
   static Color get greyDark => colorFromHex('#656565');
   static Color get shadow => greyLight.withOpacity(0.2);
+  static Color get placeholder => colorFromHex('#94A3B8');
+  static Color get darkBlue => Color(0xFF0F172A);
+  static Color get borderGray => Color(0xFFCBD5E1);  
+  static Color get primaryBlue => Color(0xFF1D4ED8);   
+  static Color get labelGray => Color(0xFF64748B);   
+
 }
 
 class BrandingColor {
