@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
-import 'package:mock_investigation_case/models/source_summary.dart';
 import 'package:recase/recase.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
 import 'package:mock_investigation_case/enums/consent_state.dart';
 import 'package:mock_investigation_case/widgets/pipeline.dart';
@@ -21,14 +19,12 @@ class SourceExpansionTile extends StatefulWidget {
   final CollectionSource collectionSource;
   final int currentSelectedSourceId;
   final ValueChanged<int> onChangedSelectedSourceId;
-  final SourceSummary? summary;
 
   const SourceExpansionTile({
     super.key,
     required this.collectionSource,
     required this.currentSelectedSourceId,
     required this.onChangedSelectedSourceId,
-    required this.summary,
   });
 
   @override
@@ -148,14 +144,12 @@ class _SourceExpansionTileState extends State<SourceExpansionTile> {
       ),
       children: [
         Pipeline(
-          pipelineProgress: widget.collectionSource.consentState.toString(),
-          name: widget.collectionSource.tribeType.toString()
-          ),
-        SizedBox(height: 50,),
+          currentState: widget.collectionSource.consentState.name.toString().toLowerCase(),
+          tribeType: widget.collectionSource.tribeType.name.toString()
+        ),
         KPIValues(
           source: widget.collectionSource,
-          summary: widget.summary,
-          ),
+        ),
       ],
     );
   }
