@@ -1,29 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
-import 'package:mock_investigation_case/models/collection_user.dart';
-import 'package:mock_investigation_case/models/source_summary.dart';
+import 'package:mock_investigation_case/utils/fmt_count_conveter.dart';
 
 class KPIValues extends StatelessWidget {
   final CollectionSource source;
-  final SourceSummary? summary;
 
-  KPIValues({
+  const KPIValues({
     required this.source,
-    required this.summary,
     super.key,
   });
 
-
-
   Map<String, dynamic>? getValues(String name){
     if(name == "TribeType.enterprise" ){
-      return{
-        "Users": summary?.users,
-        "Collected": "0/${summary?.users}", // e compute pani atay
-        "Emails": summary?.emails,
-        "Drive Files": summary?.driveFiles
+      final int collectedUsers = source.users != null
+       ? source.users!.where((user) => user.status.name.toString() == "done").length
+        : 0;
+      
+      final int emailSizeBytes = source.users != null 
+        ? source.users!.fold(0, (emailSize, user) => emailSize + user.discMail)
+          : 0;
+      
+      final int driveSize = source.users != null 
+        ? source.users!.fold(0, (driveFiles, user) => driveFiles + user.driveFiles)
+          : 0;
+
+      return {
+        "Users": "${source.users?.length ?? 0}",
+        "Collected": "$collectedUsers/${source.users?.length ?? 0}",
+        "Emails": fmtCount(emailSizeBytes),
+        "Drive Files": fmtCount(driveSize)
       };
+
     } else if(name == "TribeType.personal"){
         return {
         "Accounts": 0, // pwede rasad e compute pero kaulion nako -_-
@@ -46,17 +53,14 @@ class KPIValues extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final values = getValues(source.tribeType.toString()) ?? {};
-    // logger.i("summary check ${summary?.emails}");
-    // logger.i("source check ${source.users}");
-    // logger.i((users.id));
-    // print(getValues(source.tribeType.toString()));
     return Padding(
-      padding:const EdgeInsets.all(8.0),
+      padding:const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: GridView.count(
         crossAxisCount: 2,
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
-        shrinkWrap: true,
+        shrinkWrap: true, 
+        childAspectRatio: 3,
         children: values.entries.map((entry) {
           return buildTile(entry.key, entry.value);
         }).toList(),
@@ -67,35 +71,29 @@ class KPIValues extends StatelessWidget {
 
   Widget buildTile(String title, dynamic value) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 4,
-            color: Colors.black.withOpacity(0.05),
-            offset: const Offset(0, 2),
-          )
-        ],
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: FontWeight.w600,
               color: Colors.grey,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 2),
           Text(
             value.toString(),
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 11,
               fontWeight: FontWeight.bold,
             ),
           ),
