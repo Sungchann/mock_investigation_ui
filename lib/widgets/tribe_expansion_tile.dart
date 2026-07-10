@@ -9,7 +9,6 @@ import 'package:mock_investigation_case/widgets/add_source_dialog.dart';
 
 class TribeExpansionTile extends StatefulWidget{
   final String tribeName; 
-  final SourceSummary? summary;
   final List<CollectionSource> collectionSources; 
   final int currentSelectedSourceId; 
   final ValueChanged<int> onChangedSelectedSourceId; 
@@ -17,7 +16,6 @@ class TribeExpansionTile extends StatefulWidget{
   const TribeExpansionTile({
     super.key, 
     required this.tribeName,
-    required this.summary,
     required this.collectionSources,
     required this.currentSelectedSourceId, 
     required this.onChangedSelectedSourceId
@@ -114,7 +112,6 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
             collectionSource: source,
             currentSelectedSourceId: widget.currentSelectedSourceId,
             onChangedSelectedSourceId: widget.onChangedSelectedSourceId,
-            summary: widget.summary
           )
         ))
       ],
