@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mock_investigation_case/core/data_discovery_lab_core/logger.dart';
 import 'package:mock_investigation_case/core/data_discovery_lab_core/theme.dart';
+import 'package:mock_investigation_case/enums/tribe_type.dart';
 import 'package:mock_investigation_case/models/collection_source.dart';
-import 'package:mock_investigation_case/models/source_summary.dart'; 
 import 'package:mock_investigation_case/widgets/source_expansion_tile.dart';
 import 'package:mock_investigation_case/widgets/add_source_dialog.dart';
 
@@ -12,13 +11,15 @@ class TribeExpansionTile extends StatefulWidget{
   final List<CollectionSource> collectionSources; 
   final int currentSelectedSourceId; 
   final ValueChanged<int> onChangedSelectedSourceId; 
+  final Color color;
 
   const TribeExpansionTile({
     super.key, 
     required this.tribeName,
     required this.collectionSources,
     required this.currentSelectedSourceId, 
-    required this.onChangedSelectedSourceId
+    required this.onChangedSelectedSourceId,
+    required this.color
   });
 
   @override
@@ -46,7 +47,6 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
  
   @override
   Widget build(BuildContext context){
-
     return ExpansionTile(
       controller: _controller,
       initiallyExpanded: _isSelected,
@@ -56,7 +56,7 @@ class _TribeExpansionTileState extends State<TribeExpansionTile>{
         width: 10,
           height: 10,
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: widget.color, 
             shape: BoxShape.circle,
           ),
       ),
