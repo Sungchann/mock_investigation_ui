@@ -187,7 +187,8 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
             setState(() {
               _currentSelectedSourceId = selectedSourceId;
             });
-          }
+          },
+          color: colorFromHex('#1D4ED8'),
         ),
         TribeExpansionTile(
           tribeName: "Personal", 
@@ -197,7 +198,8 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
             setState(() {
               _currentSelectedSourceId = selectedSourceId;
             });
-          }
+          },
+          color: colorFromHex('#15803D'),
         ),
         TribeExpansionTile(
           tribeName: "Drive", 
@@ -207,7 +209,8 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
             setState(() {
               _currentSelectedSourceId = selectedSourceId;
             });
-          }
+          },
+          color: colorFromHex('#B45309'),
         ),
         TribeExpansionTile(
           tribeName: "Finance", 
@@ -217,7 +220,8 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
             setState(() {
               _currentSelectedSourceId = selectedSourceId;
             });
-          }
+          },
+          color: colorFromHex('#6D28D9'),
         ),
         TribeExpansionTile(
           tribeName: "Dump / Upload", 
@@ -227,7 +231,8 @@ class _InvestigationCaseScreenState extends State<InvestigationCaseScreen> {
             setState(() {
               _currentSelectedSourceId = selectedSourceId;
             });
-          }
+          },
+          color: colorFromHex('#475569'),
         ),
       ],
     );
